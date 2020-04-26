@@ -115,21 +115,11 @@ static eval_t hanging(const Position *pos, int us, bitboard_t attacks[NB_COLOR][
     bitboard_t b = attacks[them][PAWN] & (pos->byColor[us] ^ pos_pieces_cp(pos, us, PAWN));
     b |= (attacks[them][KNIGHT] | attacks[them][BISHOP]) & pos_pieces_cpp(pos, us, ROOK, QUEEN);
     b |= pos_pieces_cp(pos, us, QUEEN) & attacks[them][ROOK];
-    b |= pos_pieces_cp(pos, us, PAWN) & attacks[them][NB_PIECE]
+    b |= pos_pieces_cp(pos, us, PAWN) & (attacks[them][NB_PIECE] | attacks[them][KING])
         & ~(attacks[us][PAWN] | attacks[us][KING] | attacks[us][NB_PIECE]);
 
-    while (b) {
-        const int piece = pos_piece_on(pos, bb_pop_lsb(&b));
-        assert(piece == PAWN || (KNIGHT <= piece && piece <= QUEEN));
-        result.op -= Hanging[piece];
-    }
-
-    // Penalize hanging pawns in the endgame
-    b = pos_pieces_cp(pos, us, PAWN) & attacks[them][KING]
-        & ~(attacks[us][PAWN] | attacks[us][KING]);
-
-    if (b)
-        result.eg -= Hanging[PAWN] * bb_count(b);
+    while (b)
+        eval_sub(&result, Hanging[pos_piece_on(pos, bb_pop_lsb(&b))]);
 
     return result;
 }

@@ -87,7 +87,7 @@ eval_t Mobility[5][15] = {
 int RookOpen[2] = {20, 33};  // 0: semi-open, 1: fully-open
 eval_t BishopPair = {77, 122};
 int Ahead = 20;
-int Hanging[NB_PIECE] = {119, 71, 118, 233, 0, 42};
+eval_t Hanging[NB_PIECE] = {{118, 66}, {74, 32}, {124, 68}, {243, 108}, {0, 0}, {34, 39}};
 
 int RingAttack[NB_PIECE] = {38, 51, 77, 75, 0, 20};
 int RingDefense[NB_PIECE] = {21, 29, 52, 45, 0, 0};
@@ -140,7 +140,7 @@ Entry Entries[] = {
     {"BishopPair", &BishopPair, 2},
     {"Ahead", &Ahead, 1},
 
-    {"Hanging", Hanging, NB_PIECE},
+    {"Hanging", Hanging, NB_PIECE * 2},
 
     {"RingAttack", RingAttack, NB_PIECE},
     {"RingDefense", RingDefense, NB_PIECE},

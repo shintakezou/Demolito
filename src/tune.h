@@ -10,7 +10,7 @@ eval_t Mobility[5][15];
 int RookOpen[2];
 eval_t BishopPair;
 int Ahead;
-int Hanging[NB_PIECE];
+eval_t Hanging[NB_PIECE];
 
 int RingAttack[6], RingDefense[6];
 int CheckAttack[4], CheckDefense[4];
